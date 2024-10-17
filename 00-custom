@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Get the current hour
+HOUR=$(date +"%H")
+
+# Determine the greeting based on the current hour
+if [ $HOUR -lt 12 ]; then
+    GREETING="Good morning"
+elif [ $HOUR -lt 18 ]; then
+    GREETING="Good afternoon"
+else
+    GREETING="Good evening"
+fi
+
+USER=$(whoami)
+
+# Tell user he is on a production node
+
+echo -e "\033[31m██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗\033[0m"
+echo -e "\033[31m██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║\033[0m"
+echo -e "\033[31m██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   ██║██║   ██║██╔██╗ ██║\033[0m"
+echo -e "\033[31m██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║   ██║██║   ██║██║╚██╗██║\033[0m"
+echo -e "\033[31m██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║\033[0m"
+echo -e "\033[31m╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝\033[0m"
+
+# Name of the company 
+
+echo -e "\033[31m███╗   ███╗██╗███╗   ██╗███████╗ █████╗ ██╗  ██╗██╗███████╗   ██████╗ ███████╗\033[0m"
+echo -e "\033[31m████╗ ████║██║████╗  ██║██╔════╝██╔══██╗╚██╗██╔╝██║██╔════╝   ██╔══██╗██╔════╝\033[0m"
+echo -e "\033[31m██╔████╔██║██║██╔██╗ ██║█████╗  ███████║ ╚███╔╝ ██║███████╗   ██║  ██║█████╗  \033[0m"
+echo -e "\033[31m██║╚██╔╝██║██║██║╚██╗██║██╔══╝  ██╔══██║ ██╔██╗ ██║╚════██║   ██║  ██║██╔══╝  \033[0m"
+echo -e "\033[31m██║ ╚═╝ ██║██║██║ ╚████║███████╗██║  ██║██╔╝ ██╗██║███████║██╗██████╔╝███████╗\033[0m"
+echo -e "\033[31m╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝╚═════╝ ╚══════╝\033[0m"
+
+# basic information
+
+echo -e "\n\n$GREETING, $USER!\n"
+echo -e "================================ENVIRONMENT=================================="
+echo -e "Hostname.......................: $(hostname)"
+echo -e "Environment....................: prod"
+echo -e "Release........................: $(lsb_release -d | cut -f2-)"
+echo -e "Users..........................: Currently $(who | wc -l) user(s) logged on"
+echo -e "Owner..........................: julien@julien-ziegler.de"
+echo -e "Team...........................: OS Cooler Hoster"
+echo -e "Application....................: Linux Server"
+echo -e "Location.......................: Karlsruhe"
+echo -e "Provider.......................: mineaxis.de"
+echo -e "===================================SYSTEM===================================="
+echo -e "Current user...................: $USER"
+echo -e "CPU usage......................: $(uptime | awk -F'load average:' '{ print $2 }')"
+echo -e "Memory used....................: $(free -m | awk '/^Mem:/{print $3" MB / "$2" MB ("$3*100/$2"%) used"}')"
+echo -e "Swap in use....................: $(free -m | awk '/^Swap:/{print $3" MB"}')"
+echo -e "Processes......................: $(ps -e | wc -l) running"
+echo -e "System uptime..................: $(uptime -p)"
+echo -e "===================================MOUNTS===================================="
+echo -e "$(df -h | awk '$NF=="/"{printf " - / .............................: %s used\n", $5}')"
+echo -e "$(df -h | awk '$NF=="/home"{printf " - /HOME .........................: %s used\n", $5}')"
+echo -e "$(df -h | awk '$NF=="/opt"{printf " - /OPT ..........................: %s used\n", $5}')"
+echo -e "$(df -h | awk '$NF=="/tmp"{printf " - /TMP ..........................: %s used\n", $5}')"
+echo -e "$(df -h | awk '$NF=="/usr"{printf " - /USR ..........................: %s used\n", $5}')"
+echo -e "$(df -h | awk '$NF=="/var"{printf " - /VAR ..........................: %s used\n", $5}')"
+echo -e "============================================================================="
